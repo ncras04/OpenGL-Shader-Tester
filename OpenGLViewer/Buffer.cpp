@@ -6,7 +6,7 @@ void Buffer::CreateBufferObject()
 	glGenBuffers(1, &m_bufferID);
 }
 
-void Buffer::SetAttributeID(const char* _name, unsigned int _id)
+void Buffer::SetAttributeID(const char* _name, GLuint _id)
 {
 	m_attributeID = _id;
 }
@@ -22,7 +22,7 @@ void Buffer::BufferFill(GLsizeiptr _size, const void* _data, GLenum _usage)
 	glBufferData(m_target, _size, _data, _usage);
 }
 
-void Buffer::LinkAttribute(unsigned int _size, GLenum _type, bool _normalized, GLsizei _stride, const void* _pointer)
+void Buffer::LinkAttribute(GLuint _size, GLenum _type, bool _normalized, GLsizei _stride, const void* _pointer)
 {
 	glVertexAttribPointer(m_attributeID, _size, _type, _normalized, _stride, _pointer);
 }

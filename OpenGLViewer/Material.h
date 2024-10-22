@@ -5,11 +5,10 @@
 
 struct Material
 {
-	void CreateTextures(unsigned int _shaderID);
-	void LinkTextures(unsigned int _shaderID);
-	void Update(unsigned int _shaderID);
+	Material();
+	void LinkTextures();
 	void Draw();
 
 private:
-	Texture m_diffuseTexture{}, m_overlayTexture{};
+	Texture m_diffuseTexture, m_overlayTexture;
 };

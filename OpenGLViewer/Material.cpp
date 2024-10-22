@@ -1,20 +1,12 @@
 #include "Material.h"
 #include "Time.h"
-void Material::CreateTextures(unsigned int _shaderID)
-{
-	m_diffuseTexture.Init("container.jpg", _shaderID, "diffuseTexture", 0);
-	m_overlayTexture.Init("saelogo.png", _shaderID, "overlayTexture", 1);
-}
 
-void Material::LinkTextures(unsigned int _shaderID)
-{
-	m_diffuseTexture.LinkTexture(_shaderID, "diffuseTexture");
-	m_overlayTexture.LinkTexture(_shaderID, "overlayTexture");
-}
+Material::Material() : m_diffuseTexture{ "container.jpg", "diffuseTexture", 0 }, m_overlayTexture{ "saelogo.png", "overlayTexture", 1 } {}
 
-void Material::Update(unsigned int _shaderID)
+void Material::LinkTextures()
 {
-	
+	m_diffuseTexture.LinkTexture("diffuseTexture");
+	m_overlayTexture.LinkTexture("overlayTexture");
 }
 
 void Material::Draw()

@@ -9,11 +9,10 @@
 
 struct Shader
 {
-	unsigned int id{};
-	inline Shader() {};
-	Shader(const char* vertexPath, const char* fragmentPath);
-
+	Shader(const char* vertexPath = "Vertex.glsl", const char* fragmentPath = "Fragment.glsl");
 	void Delete();
+
+	static GLuint shaderID;
 
 };
 #endif //!SSHADER_H

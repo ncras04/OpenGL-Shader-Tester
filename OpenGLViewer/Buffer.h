@@ -4,18 +4,16 @@
 struct Buffer
 {
 	void CreateBufferObject();
-	void SetAttributeID(const char*, unsigned int);
+	void SetAttributeID(const char*, GLuint);
 	void Bind(GLenum);
 	void BufferFill(GLsizeiptr, const void*, GLenum);
-	void LinkAttribute(unsigned int, GLenum, bool, GLsizei, const void*);
+	void LinkAttribute(GLuint, GLenum, bool, GLsizei, const void*);
 	void EnableAttribute();
 	void Finalize();
 
 private:
-
-	unsigned int m_bufferID;
-	unsigned int m_attributeID;
-	GLenum m_target;
+	GLenum m_target{};
+	GLuint m_bufferID{}, m_attributeID{};
 
 };
 

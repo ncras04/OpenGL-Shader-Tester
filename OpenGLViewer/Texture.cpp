@@ -1,9 +1,7 @@
 #include "Texture.h"
 
-void Texture::Init(const std::string& _path, unsigned int _shaderID, const char* _uniformname, int _unit)
+Texture::Texture(const std::string& _path, const char* _uniformname, int _unit) : m_unit{ _unit }
 {
-	m_unit = _unit;
-
 	stbi_set_flip_vertically_on_load(true);
 	unsigned char* buffer = stbi_load(_path.c_str(), &m_width, &m_height, &m_bitsPerPixel, 4);
 
@@ -22,13 +20,18 @@ void Texture::Init(const std::string& _path, unsigned int _shaderID, const char*
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		stbi_image_free(buffer);
-		LinkTexture(_shaderID, _uniformname);
+		LinkTexture(_uniformname);
 	}
 }
 
-void Texture::LinkTexture(unsigned int _shaderID, const char* _uniformname)
+Texture::~Texture()
 {
-	m_texUniform = glGetUniformLocation(_shaderID, _uniformname);
+	glDeleteTextures(1, &m_id);
+}
+
+void Texture::LinkTexture(const char* _uniformname)
+{
+	m_texUniform = glGetUniformLocation(Shader::shaderID, _uniformname);
 	glUniform1i(m_texUniform, m_unit);
 }
 

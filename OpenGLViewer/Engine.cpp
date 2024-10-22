@@ -1,57 +1,69 @@
 #include "Engine.h"
 #include "Shader.h"
-#include "Vertex.h"
 #include "Mesh.h"
 #include "Material.h"
 #include "Time.h"
-#include "Meshdata.h"
 
 int Engine::Initialize(void)
 {
-    if (!glfwInit())
-        return -1;
+	if (!glfwInit())
+		return -1;
 
-    m_viewport.Initialize();
-    Time::Init();
+	m_pWindow = glfwCreateWindow(1000, 1000, "Texmex", NULL, NULL);
 
-    int texUnits{};
-    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texUnits);
-    std::cout << texUnits << std::endl;
+	if (!m_pWindow)
+	{
+		glfwTerminate();
+		return -1;
+	}
 
-    return 0;
+	glfwMakeContextCurrent(m_pWindow);
+
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		return -2;
+
+	int texUnits{};
+	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texUnits);
+	std::cout << texUnits << std::endl;
+
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+
+	return 0;
 }
 
 int Engine::Run(void)
 {
-    Shader shaderProgram = Shader("Vertex.glsl", "Fragment.glsl");
+	const char* vertexPath{ "Vertex.glsl" };
+	const char* fragmentPath{ "Fragment.glsl" };
 
-    Material material{};
-    material.CreateTextures(shaderProgram.id);
+	Shader shaderProgram{ vertexPath, fragmentPath };
+	Material material{};
+	Mesh mesh{};
 
-    Mesh mesh{};
-    mesh.Init(shaderProgram.id, quadverts, quadindices);
+	while (!glfwWindowShouldClose(m_pWindow))
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
 
-    while (!glfwWindowShouldClose(m_viewport.GetWindow()))
-    {
-        Time::Update();
-        
-        if (glfwGetKey(m_viewport.GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS)
-        {
-            shaderProgram.Delete();
-            shaderProgram = Shader("Vertex.glsl", "Fragment.glsl");
-            mesh.LinkAttributes(shaderProgram.id);
-            material.LinkTextures(shaderProgram.id);
-        }
+		Time::Update();
 
-        m_viewport.Update();
-        material.Update(shaderProgram.id);
+		if (glfwGetKey(m_pWindow, GLFW_KEY_SPACE) == GLFW_PRESS)
+		{
+			shaderProgram.Delete();
+			shaderProgram = Shader(vertexPath, fragmentPath);
+			mesh.LinkAttributes();
+			material.LinkTextures();
+		}
 
-        m_viewport.Draw();
-        material.Draw();
-        mesh.Draw();
+		material.Draw();
+		mesh.Draw();
 
-		m_viewport.LateDraw();
-    }
+		glfwSwapBuffers(m_pWindow);
+		glfwPollEvents();
+	}
 
-    return 0;
+	glfwTerminate();
+
+	m_pWindow = nullptr;
+
+	return 0;
 }

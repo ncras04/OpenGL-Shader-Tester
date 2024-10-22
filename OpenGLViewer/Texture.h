@@ -6,13 +6,12 @@
 
 struct Texture
 {
-	void Init(const std::string& _path, unsigned int, const char* _uName, int _unit);
+	Texture(const std::string& _path, const char* _uName, int _unit);
+	~Texture();
+	void LinkTexture(const char* _uniformname);
 	void Draw();
-	void LinkTexture(unsigned int _shaderID, const char* _uniformname);
 
 private:
-	unsigned int m_id{};
-	unsigned int m_texUniform{};
+	GLuint m_id{}, m_texUniform{};
 	int m_width{}, m_height{}, m_bitsPerPixel{}, m_unit{};
-
 };

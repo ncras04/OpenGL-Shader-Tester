@@ -1,1 +1,0 @@
-#include "SVertex.h"

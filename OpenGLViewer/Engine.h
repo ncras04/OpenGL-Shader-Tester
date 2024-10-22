@@ -1,7 +1,6 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include "Viewport.h"
 #include <GLAD/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -13,8 +12,7 @@ struct Engine
 	int Run(void);
 
 private:
-
-	Viewport m_viewport{};
+	GLFWwindow* m_pWindow{};
 };
 
 #endif // !ENGINE_H

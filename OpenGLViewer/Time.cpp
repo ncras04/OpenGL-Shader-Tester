@@ -1,15 +1,9 @@
 #include "Time.h"
 
-float Time::m_deltaTime{};
-float Time::m_totalTime{};
-int Time::m_fpsCount{};
+double Time::m_deltaTime{};
+double Time::m_totalTime{};
 double Time::m_lastTimestamp{};
-
-int Time::Init()
-{
-	Time::m_lastTimestamp = glfwGetTime();
-	return 0;
-}
+int Time::m_fpsCount{};
 
 void Time::Update()
 {

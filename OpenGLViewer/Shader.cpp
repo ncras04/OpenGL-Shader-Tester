@@ -1,5 +1,7 @@
 #include "Shader.h"
 
+GLuint Shader::shaderID{};
+
 Shader::Shader(const char* vertexPath, const char* fragmentPath)
 {
 	std::string vertexCode;
@@ -68,17 +70,17 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 			<< infolog << std::endl;
 	}
 
-	id = glCreateProgram();
+	shaderID = glCreateProgram();
 
-	glAttachShader(id, vertex);
-	glAttachShader(id, fragment);
-	glLinkProgram(id);
+	glAttachShader(shaderID, vertex);
+	glAttachShader(shaderID, fragment);
+	glLinkProgram(shaderID);
 
-	glGetProgramiv(id, GL_LINK_STATUS, &success);
+	glGetProgramiv(shaderID, GL_LINK_STATUS, &success);
 
 	if (!success)
 	{
-		glGetShaderInfoLog(id, 512, NULL, infolog);
+		glGetShaderInfoLog(shaderID, 512, NULL, infolog);
 		std::cout << "SHADER LINKING FAILED" << std::endl
 			<< infolog << std::endl;
 	}
@@ -86,10 +88,10 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
-	glUseProgram(id);
+	glUseProgram(shaderID);
 }
 
 void Shader::Delete()
 {
-	glDeleteProgram(id);
+	glDeleteProgram(shaderID);
 }

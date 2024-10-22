@@ -27,9 +27,6 @@
     <ClCompile Include="Engine.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Viewport.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -54,9 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Viewport.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Vertex.h">
@@ -94,5 +88,13 @@
     <None Include="Fragment.glsl">
       <Filter>Quelldateien\Shader</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="container.jpg">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
+    <Image Include="SAELogo.png">
+      <Filter>Ressourcendateien</Filter>
+    </Image>
   </ItemGroup>
 </Project>
