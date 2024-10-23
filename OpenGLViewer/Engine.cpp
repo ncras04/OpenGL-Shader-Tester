@@ -1,3 +1,4 @@
+#include <filesystem>
 #include "Engine.h"
 #include "Shader.h"
 #include "Mesh.h"
@@ -36,6 +37,9 @@ int Engine::Run(void)
 	const char* vertexPath{ "Vertex.glsl" };
 	const char* fragmentPath{ "Fragment.glsl" };
 
+	auto fragmentShaderFilepath = std::filesystem::path("Fragment.glsl");
+	std::filesystem::file_time_type lastChanged{ std::filesystem::last_write_time(fragmentShaderFilepath) };
+
 	Shader shaderProgram{ vertexPath, fragmentPath };
 	Material material{};
 	Mesh mesh{};
@@ -45,9 +49,10 @@ int Engine::Run(void)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		Time::Update();
-
-		if (glfwGetKey(m_pWindow, GLFW_KEY_SPACE) == GLFW_PRESS)
+		
+		if (lastChanged < std::filesystem::last_write_time(fragmentShaderFilepath))
 		{
+			lastChanged = std::filesystem::last_write_time(fragmentShaderFilepath);
 			shaderProgram.Delete();
 			shaderProgram = Shader(vertexPath, fragmentPath);
 			mesh.LinkAttributes();
